@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WebSocket Chat</title>
+</head>
+
+<body>
+  <input type="text" id="messageInput">
+  <button onclick="sendMessage()">Enviar</button>
+  <ul id="messages"></ul>
+
+  <script>
+    // const ws = new WebSocket('wss://049b4463-ac49-42d7-963e-0c7d82874ae7-00-26r8io80511pb.worf.replit.dev');
+    
+    const ws = new WebSocket('wss://d97bc09e-1ed7-4285-a231-b6b06fad5e13-00-1xlqz1eh9qog3.kirk.replit.dev/');
+
+    ws.addEventListener('message', function (event) {
+      event.data.text().then(data => addMessage(data))
+      // const blob = event.data;
+      // const reader = new FileReader()
+      // reader.readAsText(blob)
+      // reader.onload = () => addMessage(reader.result)
+    })
+
+    function addMessage(message) {
+      checkMessage(message)
+      const messages = document.getElementById('messages');
+      messagesOld = messages.innerHTML
+      messages.innerHTML = messagesOld + `<li>${message}</li>`;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      message = input.value
+      ws.send(message);
+      input.value = '';
+    }
+
+    function checkMessage(message){
+      if(message.includes("dog run")){
+        let midia = new Audio('dog-run.mp3')
+        midia.play()
+      }
+    }
+    
+  </script>
+</body>
+
+</html>
